@@ -169,20 +169,16 @@ for(var i = 0 ; i<events.length ; i++){
   for(var j = 0 ; j<bars.length ; j++){
     if(events[i].barId==bars[j].id){
       if(events[i].persons>=10 && events[i].persons<20){
-        var barpricePerPerson = bars[j].pricePerPerson*0.9
-        events[i].price = events[i].time * bars[j].pricePerHour + events[i].persons * barpricePerPerson;
+        events[i].price = events[i].time * bars[j].pricePerHour + events[i].persons * bars[j].pricePerPerson*0.9;
         bookprice1.push(events);
       }else if(events[i].persons>=20 && events[i].persons<60){
-        var barpricePerPerson = bars[j].pricePerPerson*0.7
-        events[i].price = events[i].time * bars[j].pricePerHour + events[i].persons * barpricePerPerson;
+        events[i].price = events[i].time * bars[j].pricePerHour + events[i].persons * bars[j].pricePerPerson*0.7;
         bookprice1.push(events);
       }else if(events[i].persons>=60){
-        var barpricePerPerson = bars[j].pricePerPerson*0.5
-        events[i].price = events[i].time * bars[j].pricePerHour + events[i].persons * barpricePerPerson;
+        events[i].price = events[i].time * bars[j].pricePerHour + events[i].persons * bars[j].pricePerPerson*0.5;
         bookprice1.push(events);
       }else{
-        var barpricePerPerson = bars[j].pricePerPerson
-        events[i].price = events[i].time * bars[j].pricePerHour + events[i].persons * barpricePerPerson;
+        events[i].price = events[i].time * bars[j].pricePerHour + events[i].persons * bars[j].pricePerPerson;
         bookprice1.push(events);
       }
     }
@@ -207,3 +203,23 @@ for(var i = 0; i<events.length; i++)
     }
 }
 console.log(bookprice2);
+
+//Step 4 The famous deductible
+var booking_price3=[];
+var deductibleReduction;
+for(var i = 0; i<events.length; i++){
+  for(var j = 0; j < bars.length; j++){
+      if(events[i].barId == bars[j].id){
+          if (events[i].options.deductibleReduction == true){
+            events[i].price = events[i].price + events[i].persons * 1;
+            console.log("Your deductible is 200€");
+          }
+          else events[i].price = events[i].price + 5000;
+            events[i].price = events[i].price;
+            console.log("Your deductible is 5000€");
+            bookprice3.push(events);
+      }
+  }
+}
+console.log(bookprice3);
+

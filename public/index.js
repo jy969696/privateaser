@@ -194,10 +194,10 @@ for(var i = 0; i<events.length; i++)
     {
         if(events[i].barId == bars[j].id)
         {
-          var commission = events[i].price.price * 0.3
-          events[i].commission.insurance = commission*0.5;
+          events[i].commission = events[i].price * 0.3;
+          events[i].commission.insurance = events[i].commission *0.5;
           events[i].commission.treasury = events[i].persons * 1;
-          events[i].commission.privateaser = events[i].price.price * 0.3*0.5-events[i].persons * 1;
+          events[i].commission.privateaser = events[i].price * 0.3-events[i].commission *0.5-events[i].persons * 1;
           bookprice2.push(events);
         }
     }
@@ -211,15 +211,42 @@ for(var i = 0; i<events.length; i++){
   for(var j = 0; j < bars.length; j++){
       if(events[i].barId == bars[j].id){
           if (events[i].options.deductibleReduction == true){
-            events[i].price = events[i].price + events[i].persons * 1;
+            events[i].commission.newprivateaser = events[i].commission.privateaser + events[i].persons * 1;
             console.log("Your deductible is 200€");
           }
           else events[i].price = events[i].price + 5000;
-            events[i].price = events[i].price;
+            events[i].commission.newprivateaser = events[i].commission.privateaser;
             console.log("Your deductible is 5000€");
             bookprice3.push(events);
       }
   }
 }
 console.log(bookprice3);
+
+//step5
+for(var i = 0; i<actors.length; i++){
+  for(var j = 0; j < events.length; j++){
+      if(actors[i].eventId == events[j].id,){
+          for (var m = 0; m < actors[i].payment.length; m++){
+              if (actors[i].payment[m].who == 'booker'){
+                  actors[i].payment[m].amount = events[j].price + events[i].persons * 1;;
+              }
+              else if (actors[i].payment[m].who == 'bar'){
+                  actors[i].payment[m].amount = events[j].price - events[j].commission;
+              }
+              else if (actors[i].payment[m].who == 'insurance'){
+                  actors[i].payment[m].amount = events[j].commission.insurance;
+              }
+              else if (actors[i].payment[m].who == 'treasury'){
+                  actors[i].payment[m].amount = events[j].commission.treasury;
+              }
+              else if (actors[i].payment[m].who == 'privateaser'){
+                  actors[i].payment[m].amount = events[i].commission.newprivateaser;
+              }
+          }
+      }
+  }
+}
+console.log(actors);
+
 

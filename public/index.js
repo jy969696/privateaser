@@ -151,41 +151,15 @@ console.log(events);
 console.log(actors);
 
 //step1 Euro-People
-var bookprice=[];
+var bookprice0=[];
 for(var i = 0; i<events.length; i++){
   for(var j = 0; j < bars.length; j++){
     if(events[i].barId == bars[j].id)
     {
         events[i].price = events[i].time * bars[j].pricePerHour + events[i].persons * bars[j].pricePerPerson;
-        bookprice.push(events);
+        bookprice0.push(events);
     }
   }
 }
-console.log(bookprice);
+console.log(bookprice0);
 
-//Step 2 Send more, pay less
-var bookprice1=[];
-for(var i = 0 ; i<events.length ; i++){
-  for(var j = 0 ; j<bars.length ; j++){
-    if(events[i].barId==bars[j].id){
-      if(events[i].persons>=10 && events[i].persons<20){
-        var barpricePerPerson = bars[j].pricePerPerson*0.9
-        events[i].price = events[i].time * bars[j].pricePerHour + events[i].persons * barpricePerPerson;
-        bookprice1.push(events);
-      }else if(events[i].persons>=20 && events[i].persons<60){
-        var barpricePerPerson = bars[j].pricePerPerson*0.7
-        events[i].price = events[i].time * bars[j].pricePerHour + events[i].persons * barpricePerPerson;
-        bookprice1.push(events);
-      }else if(events[i].persons>=60){
-        var barpricePerPerson = bars[j].pricePerPerson*0.5
-        events[i].price = events[i].time * bars[j].pricePerHour + events[i].persons * barpricePerPerson;
-        bookprice1.push(events);
-      }else{
-        var barpricePerPerson = bars[j].pricePerPerson
-        events[i].price = events[i].time * bars[j].pricePerHour + events[i].persons * barpricePerPerson;
-        bookprice1.push(events);
-      }
-    }
-  }
-}
-console.log(bookprice1);
